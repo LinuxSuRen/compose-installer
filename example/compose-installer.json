@@ -1,0 +1,23 @@
+{
+  "defaultProduct": "demo",
+  "products": {
+    "demo": {
+      "composeFiles": {
+        "prod": "docker-compose.yml"
+      },
+      "versions": {
+        "prod": "versions/prod.json"
+      },
+      "envExports": {
+        "APP_VERSION": "{version}"
+      },
+      "requiredEnv": [
+        "DEMO_API_TOKEN"
+      ],
+      "envRewrites": {
+        "DEMO_DATA_DIR": "{installDir}/data"
+      },
+      "installDirName": "demo"
+    }
+  }
+}

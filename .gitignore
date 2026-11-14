@@ -1,0 +1,9 @@
+bin/
+dist/
+*.tar.gz
+*.exe
+*.log
+web/dist/
+web/node_modules/
+web/public/
+coverage.out

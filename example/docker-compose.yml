@@ -1,0 +1,18 @@
+services:
+  # Static site served by nginx; ./site is auto-collected into the bundle
+  # (local mount scan) so the bind source never goes missing on the target.
+  web:
+    image: nginx:${NGINX_TAG:-1.27-alpine}
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    volumes:
+      - ./site:/usr/share/nginx/html:ro
+
+  # Tiny demo API. DEMO_API_TOKEN is a requiredEnv key: the installer refuses
+  # to proceed without it (fail-closed, no silently inherited defaults).
+  api:
+    image: hashicorp/http-echo:${HTTP_ECHO_TAG:-1.0.0}
+    environment:
+      - DEMO_API_TOKEN=${DEMO_API_TOKEN:?DEMO_API_TOKEN is required}
+    volumes:
+      - ${DEMO_DATA_DIR:-/var/lib/demo}:/data

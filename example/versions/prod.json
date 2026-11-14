@@ -1,0 +1,9 @@
+{
+  "latest": "1.0",
+  "versions": {
+    "1.0": {
+      "nginx": "1.27-alpine",
+      "http-echo": "1.0.0"
+    }
+  }
+}

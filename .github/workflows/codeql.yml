@@ -1,0 +1,32 @@
+name: CodeQL
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  schedule:
+    - cron: "30 3 * * 1"
+
+permissions:
+  security-events: write
+  contents: read
+
+jobs:
+  analyze:
+    name: Analyze (go)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Placeholder web/dist for embed
+        run: |
+          mkdir -p web/dist
+          printf '<!doctype html><html lang="en"></html>' > web/dist/index.html
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: go
+      - uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:go"

@@ -1,0 +1,22 @@
+# Upstream reference (ExecStart path adapted to /usr/bin):
+# https://github.com/containerd/containerd/blob/main/containerd.service
+[Unit]
+Description=containerd container runtime
+Documentation=https://containerd.io
+After=network.target dbus.service
+
+[Service]
+ExecStartPre=-/sbin/modprobe overlay
+ExecStart=/usr/bin/containerd
+Type=notify
+Delegate=yes
+KillMode=process
+Restart=always
+RestartSec=5
+LimitNPROC=infinity
+LimitCORE=infinity
+TasksMax=infinity
+OOMScoreAdjust=-999
+
+[Install]
+WantedBy=multi-user.target
