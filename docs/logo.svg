@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="compose-installer logo">
+  <!-- compose-installer: stacked compose layers (left) arrowed down into an
+       install tray (right). Single logo source for README + web favicon. -->
+  <defs>
+    <linearGradient id="ci-g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#1d63ed"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="112" height="112" rx="26" fill="#0f172a"/>
+  <g fill="url(#ci-g)">
+    <rect x="24" y="30" width="42" height="12" rx="4"/>
+    <rect x="24" y="48" width="42" height="12" rx="4" opacity=".72"/>
+    <rect x="24" y="66" width="42" height="12" rx="4" opacity=".45"/>
+  </g>
+  <g stroke="#38bdf8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M84 30 v30"/>
+    <path d="M73 50 l11 11 11-11"/>
+  </g>
+  <rect x="62" y="72" width="44" height="14" rx="7" fill="none" stroke="#38bdf8" stroke-width="6"/>
+</svg>

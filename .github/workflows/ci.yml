@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  go:
+    name: Go build & test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      # go:embed requires web/dist to exist; a placeholder is enough for the
+      # Go jobs (the web job below builds the real UI).
+      - name: Placeholder web/dist for embed
+        run: |
+          mkdir -p web/dist
+          printf '<!doctype html><html lang="en"></html>' > web/dist/index.html
+      - run: go vet .
+      - run: go build .
+      - run: go test ./...
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          args: --timeout 5m
+
+  web:
+    name: Web build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+      - name: Copy logo into web public dir
+        run: mkdir -p web/public && cp docs/logo.svg web/public/logo.svg
+      - run: pnpm --dir web install --frozen-lockfile
+      - run: pnpm --dir web build
